@@ -1,0 +1,3 @@
+[submodule "rails/medialog"]
+	path = rails/medialog
+	url = https://github.com/NYU-ACM/medialog.git
