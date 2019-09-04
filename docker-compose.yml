@@ -1,0 +1,19 @@
+---
+version: "2.1"
+
+volumes:
+  postgresql_data:
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:62001:5432"
+
+  medialog:
+    build:
+      context: "medialog/"
+    ports:
+      - "127.0.0.1:62002:3000"
