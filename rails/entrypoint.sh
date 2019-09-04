@@ -10,4 +10,8 @@ rvm alias create default 2.0.0@medialog
 rvm use default
 gem install bundler -v 1.17.3
 bundle install
+rake db:migrate
+RAILS_ENV=test db:migrate
+rake users:create_admin
+# rspec spec
 rails s
