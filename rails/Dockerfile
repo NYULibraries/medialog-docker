@@ -11,8 +11,8 @@ RUN yum install -y which git postgresql postgresql-libs postgresql-contrib postg
 COPY medialog/ /opt/medialog
 COPY accounts.yml /opt/medialog/config/accounts.yml
 COPY database.yml /opt/medialog/config/database.yml
-COPY entrypoint.sh /opt/medialog/entrypoint.sh
-
+COPY install_rails.sh /opt/medialog/install_rails.sh
+COPY start_rails.sh /opt/medialog/start_rails.sh
 RUN set -ex \
 	&& groupadd --gid 333 medialog \
     && useradd --uid 333 --gid 333 medialog
@@ -20,6 +20,8 @@ RUN set -ex \
 RUN set -ex \
 	&& chown -R medialog:medialog /opt/medialog
 
+RUN su - medialog /opt/medialog/install_rails.sh
+
 USER medialog
 
-ENTRYPOINT ["/opt/medialog/entrypoint.sh"]
+ENTRYPOINT ["/opt/medialog/start_rails.sh"]
