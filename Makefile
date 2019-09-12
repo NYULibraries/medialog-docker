@@ -11,5 +11,15 @@ create-db:  ## Bootstrap Database.
 start-db:  ## Start postgresql service.
 	docker-compose up -d db
 
-start-rails:  ## Start postgresql service.
-	docker-compose exec medialog /opt/medialog/start_rails.sh
+migrate-db:	## run database migrations
+	docker-compose exec medialog /opt/medialog/scripts/migrate_db.sh
+
+start-medialog:  ## Start postgresql service.
+	docker-compose up medialog
+
+shell:  ## start the medialog shell
+	docker-compose exec medialog /bin/bash
+
+restart-medialog:  ## start the medialog shell
+	docker-compose stop medialog
+	docker-compose up medialog
