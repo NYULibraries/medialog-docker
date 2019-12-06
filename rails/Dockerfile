@@ -1,16 +1,18 @@
-FROM centos:latest
+FROM centos:6
 
-LABEL org.label-schema.schema-version="1.0" \
-    org.label-schema.name="CentOS Base Image" \
-    org.label-schema.vendor="CentOS" \
-    org.label-schema.license="GPLv2" \
-    org.label-schema.build-date="20190801"
+RUN rpm -Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-6-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 
+RUN yum install -y which git postgresql94-server postgresql94-libs postgresql94-contrib postgresql94-devel autoconf automake bison bzip2 gcc-c++ libffi-devel libtool make patch readline-devel ruby sqlite-devel zlib-devel glibc-headers glibc-devel openssl-devel
 
-RUN yum install -y which git postgresql postgresql-libs postgresql-contrib postgresql-devel autoconf automake bison bzip2 gcc-c++ libffi-devel libtool make patch readline-devel ruby sqlite-devel zlib-devel glibc-headers glibc-devel openssl-devel
+RUN service postgresql-9.4 initdb
 
 COPY medialog /opt/medialog
 
+COPY scripts /opt/medialog/scripts
+
+COPY  config/*.yml /opt/medialog/config/
+
+COPY config/pg_hba.conf /var/lib/pgsql/9.4/data
 
 RUN set -ex \
 	&& groupadd --gid 333 medialog \
@@ -23,9 +25,6 @@ USER medialog
 
 WORKDIR /opt/medialog
 
-COPY scripts /opt/medialog/scripts
-COPY config/*.yml /opt/medialog/config/
-
 RUN scripts/install_rails.sh
 
-ENTRYPOINT ["/opt/medialog/scripts/start_rails.sh"]
+USER root

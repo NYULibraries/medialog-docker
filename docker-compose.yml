@@ -1,20 +1,18 @@
 version: "3"
 
 volumes:
-  postgresql_data:
+  postgresql:
+  medialog:
+  home:
 
 services:
-  db:
-    image: postgres
-    volumes:
-      - postgresql_data:/var/lib/postgresql/data
-    ports:
-      - "127.0.0.1:62001:5432"
 
   medialog:
     build:
       context: "rails/"
     ports:
       - "127.0.0.1:3000:3000"
-    links:
-      - db
+    volumes:
+      - "postgresql:/var/lib/pgsql/9.4/"
+      - "medialog:/opt/medialog/"
+      - "home:/home/medialog/"

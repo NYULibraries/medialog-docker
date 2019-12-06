@@ -1,17 +1,11 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: medialog_dev
-  username: medialog
-  password: medialog
-  host: db
-  port: 5432
+  database: medialog
+  username: postgres
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: medialog_dev
-  username: medialog
-  password: medialog
-  host: db
-  port: 5432
+  database: medialog_test
+  username: postgres

@@ -6,4 +6,3 @@ rvm use default
 rake db:migrate
 RAILS_ENV=test rake db:migrate
 rake users:create_admin
-rspec spec

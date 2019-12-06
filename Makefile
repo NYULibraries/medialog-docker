@@ -18,7 +18,6 @@ restart-medialog:	## run database migrations
 	docker-compose down medialog
 	docker-compose up medialog
 
-
 start-medialog:  ## Start postgresql service.
 	docker-compose up medialog
 
